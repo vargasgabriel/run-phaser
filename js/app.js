@@ -22,12 +22,12 @@ function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    game.world.setBounds(0, 0, 1920, 600);
+    game.world.setBounds(0, 0, 1200, 600);
 
     //  A simple background for our game
     game.add.sprite(0, 0, 'sky');
 
-    background = game.add.tileSprite(0, 0, 1920, 600, 'sky');
+    background = game.add.tileSprite(0, 0, 1200, 600, 'sky');
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.add.group();
@@ -56,7 +56,7 @@ function create() {
     }
 
     // The player and its settings
-    player = game.add.sprite(32, game.world.height - 150, 'dude');
+    player = game.add.sprite(64, game.world.height - 150, 'dude');
 
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
@@ -69,16 +69,16 @@ function create() {
     game.camera.follow(player);
 
     //  Our two animations, walking left and right.
-    player.animations.add('left', [0, 1, 2, 3], 10, true);
+    //player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
-    baddie = game.add.sprite(512, game.world.height - 150, 'baddie');
+    baddie = game.add.sprite(32, game.world.height - 150, 'baddie');
     game.physics.arcade.enable(baddie);
 
     baddie.body.bounce.y = 0.1;
     baddie.body.gravity.y = 300;
     baddie.body.collideWorldBounds = true;
-    baddie.animations.add('left', [0, 1], 10, true);
+    baddie.animations.add('right', [2, 3], 10, true);
 
     //  Finally some stars to collect
     stars = game.add.group();
@@ -118,45 +118,45 @@ function update() {
     game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
     //  Reset the players velocity (movement)
-    player.body.velocity.x = 0;
-    baddie.body.velocity.x = 0;
+    player.body.velocity.x = 100;
+    baddie.body.velocity.x = 100;
 
     for (var i = 1888; i > 128; i--) {
-        baddie.body.velocity.x = -220;
+        baddie.body.velocity.x = 100;
         
-        baddie.animations.play('left');
+        baddie.animations.play('right');
     }
 
     if (cursors.left.isDown)
     {
         //  Move to the left
-        player.body.velocity.x = -250;
+        player.body.velocity.x = 50;
 
-        player.animations.play('left');
+        player.animations.play('right');
 
-        background.tilePosition.x -= 250;
+        background.tilePosition.x = 50;
     }
     else if (cursors.right.isDown)
     {
         //  Move to the right
-        player.body.velocity.x = 250;
+        player.body.velocity.x = 200;
 
         player.animations.play('right');
 
-        background.tilePosition.x += 250;
+        background.tilePosition.x += 100;
     }
     else
     {
         //  Stand still
-        player.animations.stop();
+        player.animations.play('right');
 
-        player.frame = 4;
+        //player.frame = 4;
     }
     
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.body.velocity.y = -350;
+        player.body.velocity.y = -250;
     }
 
 }
