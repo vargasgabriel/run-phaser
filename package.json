@@ -1,0 +1,16 @@
+{
+  "name": "game_run",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/http-server.cmd ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gabriel Assunção Vargas",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.10.0",
+    "phaser-ce": "^2.9.1"
+  }
+}
